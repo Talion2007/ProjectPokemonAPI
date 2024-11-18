@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>PokeInfo</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Search Pokemon</h1>
+      <input
+        type="text"
+        id="pokemonName"
+        placeholder="DIGITE O NOME OU ID DO POKEMON"
+        onkeypress="searchKey()"
+      />
+      <button onclick="prevPokemon()"><</button>
+      <button onclick="fetchPokemon()">SEARCH</button>
+      <button onclick="nextPokemon()">></button>
+    </header>
+
+    <section>
+      <p id="loadingMessage" style="display: none">Loading...</p>
+      <div id="errorMessage" style="display: none"></div>
+
+      <div class="pokemon-inf" id="pokemonInfo" style="display: none">
+        <article>
+          <h2 id="pokemonTitle"></h2>
+          <h2><text>ID: </text> <span id="pokemonId"></span></h2>
+        </article>
+
+        <div id="slider">
+          <article>
+          <img id="pokemonImage" src="" alt="Imagem del Pokemon" />
+          <img id="pokemonImageBack" src="" alt="Imagem del Pokemon" />
+          </article>
+
+          <article>
+            <img id="pokemonImageShiny" src="" alt="Imagem del Pokemon" />
+            <img id="pokemonImageShinyBack" src="" alt="Imagem del Pokemon" />
+          </article>
+        </div>
+
+        <button id="NextPic" class="btn">VIEW SHINY</button>
+
+        <article>
+          <p><strong>Order: </strong> <span id="pokemonOrder"></span> </p>
+          <p><strong>Types: </strong> <span id="pokemonTypes"></span></p>
+          <p><strong>Base Experience: </strong> <span id="pokemonBaseExperience"></span></p>
+          <p><strong>Height: </strong> <span id="pokemonHeight"></span> meters</p>
+          <p><strong>Weight: </strong> <span id="pokemonWeight"></span> kilograms</p>
+          <p><strong>Abilities: </strong> <span id="pokemonAbilities"></span></p>
+          <p><strong>Stats: </strong> <span id="pokemonStats"></span></p>
+          <p><strong>Held Items: </strong> <span id="pokemonHeldItems"></span></p>
+        <p><strong>Moves: </strong> <span id="pokemonMoves"></span></p>
+        </article>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
