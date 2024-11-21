@@ -4,16 +4,17 @@ function searchKey() {
   }
 }
 
-function searchKeyPass() {
-  if (event.key === "ArrowRight") {
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowRight') {
     nextPokemon();
   }
+});
 
-  if (event.key === "ArrowLeft") {
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') {
     prevPokemon();
   }
-}
-
+});
 
 const currentID = 1;
 
