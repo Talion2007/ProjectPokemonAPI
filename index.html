@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="assets/pkmnLogo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>PokeInfo</title>
@@ -10,13 +11,14 @@
   <body>
     <header>
       <h1>Search Pokemon</h1>
+      <button onclick="prevPokemon()"><</button>
+      <button onclick="fetchTop10Pokemon()">LIST ALL</button>
       <input
         type="text"
         id="pokemonName"
         placeholder="DIGITE O NOME OU ID DO POKEMON"
         onkeypress="searchKey()"
       />
-      <button onclick="prevPokemon()"><</button>
       <button onclick="fetchPokemon()">SEARCH</button>
       <button onclick="nextPokemon()">></button>
     </header>
@@ -26,6 +28,7 @@
       <div id="errorMessage" style="display: none"></div>
 
       <div class="pokemon-inf" id="pokemonInfo" style="display: none">
+
         <article>
           <h2 id="pokemonTitle"></h2>
           <h2><text>ID: </text> <span id="pokemonId"></span></h2>
@@ -56,7 +59,14 @@
           <p><strong>Held Items: </strong> <span id="pokemonHeldItems"></span></p>
         <p><strong>Moves: </strong> <span id="pokemonMoves"></span></p>
         </article>
+
       </div>
+    </section>
+
+    
+    <section id="listSection" style="display: none;">
+      <h2>Pokemon List</h2>
+      <div id="pokemonList" class="pokemon-list"></div>
     </section>
 
     <script src="script.js"></script>

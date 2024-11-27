@@ -16,13 +16,15 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+const PORT = 7000;
+
 const currentID = 1;
 
 async function init() {
   const initID = 25;
 
   try {
-    const response = await fetch(`http://localhost:4000/pokemon/${initID}`);
+    const response = await fetch(`http://localhost:${PORT}/pokemon/${initID}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching Pokemon: ${response.statusText}`);
@@ -76,6 +78,52 @@ async function init() {
 
 init();
 
+async function fetchTop10Pokemon() {
+  const pokemonListElement = document.getElementById ("pokemonList");
+
+  for (let i = 1; i <= 1302; i++) {
+
+    document.getElementById("listSection").style.display = "block";
+
+    if (i == 1302) break;
+
+    try {
+        const response = await fetch (`http://localhost:${PORT}/pokemon/${i}`);
+        if (!response.ok) throw new Error ("Erro ao buscar dados do Pokémon :(")
+
+        const data = await response.json();
+
+
+        //criação do card do Pokémon
+
+        const pokemonCard = document.createElement ("div");
+        pokemonCard.className = "pokemon-card";
+
+        const pokemonImage = document.createElement ("img");
+        pokemonImage.src = data.image;
+        pokemonImage.alt = `Imagem de ${data.name}`;
+        pokemonImage.className = "pokemon-image";
+
+        const pokemonName = document.createElement ("h3");
+        pokemonName.textContent = data.name.toUpperCase();
+        
+        const pokemonId = document.createElement("p");
+        pokemonId.textContent = `ID: ${data.id}`;
+
+        //adiciona os elementos ao Card 
+        pokemonCard.appendChild(pokemonImage);
+        pokemonCard.appendChild(pokemonName);
+        pokemonCard.appendChild(pokemonId);
+
+        //adicona o card á lista 
+        pokemonListElement.appendChild(pokemonCard);
+    } catch (error) { 
+        console.log ("Erro ao buscar dados do Pokémon:", error);
+    }
+
+    }
+  }
+
 async function fetchPokemon(currentID) {
   const pokemonName = document.getElementById("pokemonName").value.trim();
 
@@ -90,7 +138,7 @@ async function fetchPokemon(currentID) {
 
   try {
     const response = await fetch(
-      `http://localhost:4000/pokemon/${pokemonName.toLowerCase()}`
+      `http://localhost:${PORT}/pokemon/${pokemonName.toLowerCase()}`
     );
 
     if (!response.ok) {
@@ -152,7 +200,7 @@ async function nextPokemon(currentID) {
   currentID = nextID;
 
   try {
-    const response = await fetch(`http://localhost:4000/pokemon/${nextID}`);
+    const response = await fetch(`http://localhost:${PORT}/pokemon/${nextID}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching Pokemon: ${response.statusText}`);
@@ -210,7 +258,7 @@ async function prevPokemon(currentID) {
   currentID = nextID;
 
   try {
-    const response = await fetch(`http://localhost:4000/pokemon/${nextID}`);
+    const response = await fetch(`http://localhost:${PORT}/pokemon/${nextID}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching Pokemon: ${response.statusText}`);
