@@ -86,11 +86,11 @@ async function fetchPokemonList() {
 
   const pokemonListElement = document.getElementById ("pokemonList");
 
-  for (let i = 1; i <= 1302; i++) {
+  for (let i = 1; i <= 1025; i++) {
 
     document.getElementById("listSection").style.display = "block";
 
-    if (i == 1302) break;
+    if (i == 1030) break;
 
     try {
         const response = await fetch (`http://localhost:${PORT}/pokemon/${i}`);
