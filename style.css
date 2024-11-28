@@ -64,10 +64,18 @@ header {
 
 
 .pokemon-card {
+    background-color: transparent;
+    border-radius: 2vw;
     padding: 2w;
-    width: 8vw;
+    width: 9vw;
     text-align: center;
     margin-top: 2vw;
+    border: none;
+    color: light;
+}
+
+.pokemon-card:hover {
+    background-color: lightskyblue;
 }
 
 

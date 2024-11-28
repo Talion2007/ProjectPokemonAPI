@@ -101,8 +101,12 @@ async function fetchPokemonList() {
 
         //criação do card do Pokémon
 
-        const pokemonCard = document.createElement ("div");
+        const pokemonCard = document.createElement ("button");
         pokemonCard.className = "pokemon-card";
+        pokemonCard.onclick = () => {
+          fetchPokemonId(data.id);
+        };
+        
 
         const pokemonImage = document.createElement ("img");
         pokemonImage.src = data.image;
@@ -113,7 +117,7 @@ async function fetchPokemonList() {
         pokemonName.textContent = data.name.toUpperCase();
         
         const pokemonId = document.createElement("p");
-        pokemonId.innerHTML = ` <button onclick="fetchPokemonId(${data.id})">ID: ${data.id}</button>`;
+        pokemonId.textContent = `ID: ${data.id}`;
 
         //adiciona os elementos ao Card 
         pokemonCard.appendChild(pokemonImage);
