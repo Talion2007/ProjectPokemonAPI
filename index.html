@@ -12,11 +12,11 @@
     <header>
       <h1>Search Pokemon</h1>
       <button onclick="prevPokemon()"><</button>
-      <button onclick="fetchTop10Pokemon()">LIST ALL</button>
+      <button id="listButton"  onclick="fetchPokemonList()">LIST ALL</button>
       <input
         type="text"
         id="pokemonName"
-        placeholder="DIGITE O NOME OU ID DO POKEMON"
+        placeholder="POKEMON NAME OR ID"
         onkeypress="searchKey()"
       />
       <button onclick="fetchPokemon()">SEARCH</button>

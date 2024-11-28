@@ -12,7 +12,7 @@ body {
 input, button {
     background-color: lightgreen;
     border-radius: 5vw;
-    border: solid black 0.15vw;
+    border: solid black 0.125vw;
 }
 
 .pokemon-info, #errorMessage {
@@ -31,6 +31,7 @@ img {
 
 section {
     background-image: url(assets/backarticle.png);
+    opacity: 95%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -41,6 +42,7 @@ section {
 
 header {
     background-image: url(assets/backarticle.png);
+    opacity: 95%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -62,9 +64,10 @@ header {
 
 
 .pokemon-card {
-    padding: 1.5w;
-    width: 7.5vw;
+    padding: 2w;
+    width: 8vw;
     text-align: center;
+    margin-top: 2vw;
 }
 
 
