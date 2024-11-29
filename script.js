@@ -78,17 +78,73 @@ async function init() {
 
 init();
 
-async function fetchPokemonList() {
+const musicas = [
+  "assets/Music/02 - Title Screen.mp3",
+  "assets/Music/03 - Game Tutorial.mp3",
+  "assets/Music/04 - Pallet Town.mp3",
+  "assets/Music/05 - Professor Oak.mp3",
+  "assets/Music/06 - Oak Pokémon Lab.mp3",
+  "assets/Music/07 - Strength of a Gym Leader.mp3",
+  "assets/Music/08 - Rival.mp3",
+  "assets/Music/12 - Route 1.mp3",
+  "assets/Music/15 - Pewter City.mp3",
+  "assets/Music/16 - Pokémon Center.mp3",
+  "assets/Music/19 - Viridian Forest.mp3",
+  "assets/Music/23 - Pokémon Gym.mp3",
+  "assets/Music/28 - Route 3.mp3",
+  "assets/Music/30 - Mt. Moon.mp3",
+  "assets/Music/31 - Cerulean City.mp3",
+  "assets/Music/32 - Route 24.mp3",
+  "assets/Music/35 - Vermilion City.mp3",
+  "assets/Music/36 - S.S. Anne.mp3",
+  "assets/Music/37 - Cycling.mp3",
+  "assets/Music/38 - Route 11.mp3",
+  "assets/Music/39 - Lavender Town.mp3",
+  "assets/Music/40 - Pokémon Tower.mp3",
+  "assets/Music/41 - Celadon City.mp3",
+  "assets/Music/42 - Game Corner.mp3",
+  "assets/Music/46 - Rocket Hideout.mp3",
+  "assets/Music/49 - Silph Co..mp3",
+  "assets/Music/51 - Surf.mp3",
+  "assets/Music/53 - Cinnabar Island.mp3",
+  "assets/Music/54 - Pokémon Mansion.mp3",
+  "assets/Music/55 - Pokémon Network Center.mp3",
+  "assets/Music/57 - Sevii Islands Four & Five Islands.mp3",
+  "assets/Music/61 - Sevii Islands.mp3",
+  "assets/Music/62 - Sevii Islands Six & Seven Islands.mp3",
+  "assets/Music/63 - Union Room.mp3",
+  "assets/Music/68 - Victory Road.mp3",
+  "assets/Music/70 - Epilogue.mp3",
+  "assets/Music/71 - Hall of Fame.mp3",
+  "assets/Music/72 - Ending.mp3"
+];
 
-  document.getElementById('listButton').onclick = null;
+const musica = new Audio();
 
+function playMusic() {
+  const indiceAleatorio = Math.floor(Math.random() * musicas.length);
+  musica.src = musicas[indiceAleatorio];
+  musica.play();
+  musica.addEventListener("ended", playMusic);
+  musica.addEventListener("error", function(err) {
+    console.log("Erro ao carregar áudio:", err);
+  });
+}
+
+function muteMusic() {
+musica.pause()
+}
+
+function showPokemonList () {
   window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+  document.getElementById("listSection").style.display = "block";
+}
+
+async function fetchPokemonList() {
 
   const pokemonListElement = document.getElementById ("pokemonList");
 
   for (let i = 1; i <= 1025; i++) {
-
-    document.getElementById("listSection").style.display = "block";
 
     if (i == 1030) break;
 
@@ -398,9 +454,9 @@ const btnNext = document.getElementById("NextPic");
 btnNext.addEventListener("click", () => {
   proximaImagem();
   if (imagemAtual === 0) {
-    document.getElementById("NextPic").textContent = "View Shiny".toUpperCase();
+    document.getElementById("NextPic").textContent = "View Shiny";
   } else {
     document.getElementById("NextPic").textContent =
-      "View Default".toUpperCase();
+      "View Default";
   }
 });

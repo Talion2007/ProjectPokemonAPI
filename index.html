@@ -8,18 +8,20 @@
     <title>PokeInfo</title>
   </head>
 
-  <body>
+  <body onload="fetchPokemonList()">
     <header>
       <h1>Search Pokemon</h1>
-      <button onclick="prevPokemon()"><</button>
-      <button id="listButton"  onclick="fetchPokemonList()">LIST ALL</button>
+      <button onclick="playMusic()">Play</button>
+      <button onclick="muteMusic()">Mute</button>
+      <button id="listButton"  onclick="showPokemonList()">ListAll</button>
       <input
         type="text"
         id="pokemonName"
         placeholder="POKEMON NAME OR ID"
         onkeypress="searchKey()"
       />
-      <button onclick="fetchPokemon()">SEARCH</button>
+      <button onclick="prevPokemon()"><</button>
+      <button onclick="fetchPokemon()">Search</button>
       <button onclick="nextPokemon()">></button>
     </header>
 
@@ -46,7 +48,7 @@
           </article>
         </div>
 
-        <button id="NextPic" class="btn">VIEW SHINY</button>
+        <button id="NextPic" class="btn">View Shiny</button>
 
         <article>
           <p><strong>Order: </strong> <span id="pokemonOrder"></span> </p>

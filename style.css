@@ -3,13 +3,15 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    font-family: gill Sans;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     text-align: center;
     margin: 0;
     padding: 2vw;
 }
 
 input, button {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 0.85vw;
     background-color: lightgreen;
     border-radius: 5vw;
     border: solid black 0.125vw;
@@ -83,3 +85,8 @@ header {
     width: 100px;
     height: auto;
 }
+
+p {
+    font-size: 1vw;
+}
+
