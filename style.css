@@ -17,6 +17,11 @@ input, button {
     border: solid black 0.125vw;
 }
 
+#pokemonName {
+    width: 10vw;
+    text-align: center;
+}
+
 .pokemon-info, #errorMessage {
     max-width: 30vw;
     margin-left: auto;
