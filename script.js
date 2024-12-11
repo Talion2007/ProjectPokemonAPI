@@ -4,14 +4,14 @@ function searchKey() {
   }
 }
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowRight') {
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight") {
     nextPokemon();
   }
 });
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowLeft') {
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft") {
     prevPokemon();
   }
 });
@@ -39,33 +39,52 @@ async function init() {
     //! SETTING POKEMON NAME & ID
     document.getElementById("pokemonTitle").textContent =
       data.name.toUpperCase();
+
     document.getElementById("pokemonId").textContent = data.id;
 
     //! SETTING POKEMON IMAGE
     document.getElementById("pokemonImage").src = data.sprites.front_default;
+
     document.getElementById("pokemonImage").alt = `Image of ${data.name}`;
+
     document.getElementById("pokemonImageBack").src = data.sprites.back_default;
+
     document.getElementById("pokemonImageBack").alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON IMAGE SHINY
-    document.getElementById("pokemonImageShiny").src = data.imageShiny;
+    document.getElementById("pokemonImageShiny").src = data.sprites.front_shiny;
+
     document.getElementById("pokemonImageShiny").alt = `Image of ${data.name}`;
-    document.getElementById("pokemonImageShinyBack").src = data.imageShinyBack;
+
+    document.getElementById("pokemonImageShinyBack").src =
+      data.sprites.back_shiny;
+
     document.getElementById(
       "pokemonImageShinyBack"
     ).alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON STATS
     document.getElementById("pokemonOrder").textContent = data.order;
-    document.getElementById("pokemonTypes").textContent = data.types;
+
+    document.getElementById("pokemonTypes").textContent = data.types
+      .map((type) => type.type.name)
+      .join(", ");
+
     document.getElementById("pokemonBaseExperience").textContent =
       data.base_experience;
+
     document.getElementById("pokemonHeight").textContent = data.height;
+
     document.getElementById("pokemonWeight").textContent = data.weight;
-    document.getElementById("pokemonAbilities").textContent = data.abilities;
-    document.getElementById("pokemonStats").textContent = data.stats;
-    document.getElementById("pokemonHeldItems").textContent = data.held_items;
-    document.getElementById("pokemonMoves").textContent = data.moves;
+
+    document.getElementById("pokemonAbilities").textContent = data.abilities.map((ability) => ability.ability.name).join(", ");
+
+    document.getElementById("pokemonStats").textContent = data.stats.map((stat) => stat.stat.name).join(", ");
+
+    document.getElementById("pokemonHeldItems").textContent = data.held_items.map((item) => item.item.name).join(", ");
+
+    document.getElementById("pokemonMoves").textContent = data.moves.map((move) => move.move.name).join(", ");
+
   } catch (error) {
     console.error("Error fetching Pokemon:", error);
     document.getElementById("errorMessage").textContent =
@@ -116,7 +135,7 @@ const musicas = [
   "assets/Music/68 - Victory Road.mp3",
   "assets/Music/70 - Epilogue.mp3",
   "assets/Music/71 - Hall of Fame.mp3",
-  "assets/Music/72 - Ending.mp3"
+  "assets/Music/72 - Ending.mp3",
 ];
 
 const musica = new Audio();
@@ -126,68 +145,63 @@ function playMusic() {
   musica.src = musicas[indiceAleatorio];
   musica.play();
   musica.addEventListener("ended", playMusic);
-  musica.addEventListener("error", function(err) {
+  musica.addEventListener("error", function (err) {
     console.log("Erro ao carregar áudio:", err);
   });
 }
 
 function muteMusic() {
-musica.pause()
+  musica.pause();
 }
 
-function showPokemonList () {
-  window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+function showPokemonList() {
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   document.getElementById("listSection").style.display = "block";
 }
 
 async function fetchPokemonList() {
-
-  const pokemonListElement = document.getElementById ("pokemonList");
+  const pokemonListElement = document.getElementById("pokemonList");
 
   for (let i = 1; i <= 1025; i++) {
-
     if (i == 1030) break;
 
     try {
-        const response = await fetch (`http://localhost:${PORT}/pokemon/${i}`);
-        if (!response.ok) throw new Error ("Erro ao buscar dados do Pokémon :(")
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
+      if (!response.ok) throw new Error("Erro ao buscar dados do Pokémon :(");
 
-        const data = await response.json();
+      const data = await response.json();
 
+      //criação do card do Pokémon
 
-        //criação do card do Pokémon
+      const pokemonCard = document.createElement("button");
+      pokemonCard.className = "pokemon-card";
+      pokemonCard.onclick = () => {
+        fetchPokemonId(data.id);
+      };
 
-        const pokemonCard = document.createElement ("button");
-        pokemonCard.className = "pokemon-card";
-        pokemonCard.onclick = () => {
-          fetchPokemonId(data.id);
-        };
-        
+      const pokemonImage = document.createElement("img");
+      pokemonImage.src = data.sprites.front_default;
+      pokemonImage.alt = `Imagem de ${data.name}`;
+      pokemonImage.className = "pokemon-image";
 
-        const pokemonImage = document.createElement ("img");
-        pokemonImage.src = data.image;
-        pokemonImage.alt = `Imagem de ${data.name}`;
-        pokemonImage.className = "pokemon-image";
+      const pokemonName = document.createElement("h3");
+      pokemonName.textContent = data.name.toUpperCase();
 
-        const pokemonName = document.createElement ("h3");
-        pokemonName.textContent = data.name.toUpperCase();
-        
-        const pokemonId = document.createElement("p");
-        pokemonId.textContent = `ID: ${data.id}`;
+      const pokemonId = document.createElement("p");
+      pokemonId.textContent = `ID: ${data.id}`;
 
-        //adiciona os elementos ao Card 
-        pokemonCard.appendChild(pokemonImage);
-        pokemonCard.appendChild(pokemonName);
-        pokemonCard.appendChild(pokemonId);
+      //adiciona os elementos ao Card
+      pokemonCard.appendChild(pokemonImage);
+      pokemonCard.appendChild(pokemonName);
+      pokemonCard.appendChild(pokemonId);
 
-        //adicona o card á lista 
-        pokemonListElement.appendChild(pokemonCard);
-    } catch (error) { 
-        console.log ("Erro ao buscar dados do Pokémon:", error);
-    }
-
+      //adicona o card á lista
+      pokemonListElement.appendChild(pokemonCard);
+    } catch (error) {
+      console.log("Erro ao buscar dados do Pokémon:", error);
     }
   }
+}
 
 async function fetchPokemon(currentID) {
   const pokemonName = document.getElementById("pokemonName").value.trim();
@@ -203,7 +217,7 @@ async function fetchPokemon(currentID) {
 
   try {
     const response = await fetch(
-      `http://localhost:${PORT}/pokemon/${pokemonName.toLowerCase()}`
+      `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
     );
 
     if (!response.ok) {
@@ -224,30 +238,47 @@ async function fetchPokemon(currentID) {
     document.getElementById("pokemonId").textContent = data.id;
 
     //! SETTING POKEMON IMAGE
-    document.getElementById("pokemonImage").src = data.image;
+    document.getElementById("pokemonImage").src = data.sprites.front_default;
+
     document.getElementById("pokemonImage").alt = `Image of ${data.name}`;
-    document.getElementById("pokemonImageBack").src = data.imageBack;
+
+    document.getElementById("pokemonImageBack").src = data.sprites.back_default;
+
     document.getElementById("pokemonImageBack").alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON IMAGE SHINY
-    document.getElementById("pokemonImageShiny").src = data.imageShiny;
+    document.getElementById("pokemonImageShiny").src = data.sprites.front_shiny;
+
     document.getElementById("pokemonImageShiny").alt = `Image of ${data.name}`;
-    document.getElementById("pokemonImageShinyBack").src = data.imageShinyBack;
+
+    document.getElementById("pokemonImageShinyBack").src =
+      data.sprites.back_shiny;
+
     document.getElementById(
       "pokemonImageShinyBack"
     ).alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON STATS
     document.getElementById("pokemonOrder").textContent = data.order;
-    document.getElementById("pokemonTypes").textContent = data.types;
+
+    document.getElementById("pokemonTypes").textContent = data.types
+      .map((type) => type.type.name)
+      .join(", ");
+
     document.getElementById("pokemonBaseExperience").textContent =
       data.base_experience;
+
     document.getElementById("pokemonHeight").textContent = data.height;
+
     document.getElementById("pokemonWeight").textContent = data.weight;
-    document.getElementById("pokemonAbilities").textContent = data.abilities;
-    document.getElementById("pokemonStats").textContent = data.stats;
-    document.getElementById("pokemonHeldItems").textContent = data.held_items;
-    document.getElementById("pokemonMoves").textContent = data.moves;
+
+    document.getElementById("pokemonAbilities").textContent = data.abilities.map((ability) => ability.ability.name).join(", ");
+
+    document.getElementById("pokemonStats").textContent = data.stats.map((stat) => stat.stat.name).join(", ");
+
+    document.getElementById("pokemonHeldItems").textContent = data.held_items.map((item) => item.item.name).join(", ");
+
+    document.getElementById("pokemonMoves").textContent = data.moves.map((move) => move.move.name).join(", ");
   } catch (error) {
     document.getElementById("errorMessage").textContent = error.message;
     document.getElementById("errorMessage").style.display = "block";
@@ -260,13 +291,12 @@ async function fetchPokemon(currentID) {
 }
 
 async function fetchPokemonId(idVar, currentID) {
-
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   currentID = idVar;
 
   try {
-    const response = await fetch(`http://localhost:${PORT}/pokemon/${idVar}`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idVar}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching Pokemon: ${response.statusText}`);
@@ -284,30 +314,47 @@ async function fetchPokemonId(idVar, currentID) {
     document.getElementById("pokemonId").textContent = data.id;
 
     //! SETTING POKEMON IMAGE
-    document.getElementById("pokemonImage").src = data.image;
+    document.getElementById("pokemonImage").src = data.sprites.front_default;
+
     document.getElementById("pokemonImage").alt = `Image of ${data.name}`;
-    document.getElementById("pokemonImageBack").src = data.imageBack;
+
+    document.getElementById("pokemonImageBack").src = data.sprites.back_default;
+
     document.getElementById("pokemonImageBack").alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON IMAGE SHINY
-    document.getElementById("pokemonImageShiny").src = data.imageShiny;
+    document.getElementById("pokemonImageShiny").src = data.sprites.front_shiny;
+
     document.getElementById("pokemonImageShiny").alt = `Image of ${data.name}`;
-    document.getElementById("pokemonImageShinyBack").src = data.imageShinyBack;
+
+    document.getElementById("pokemonImageShinyBack").src =
+      data.sprites.back_shiny;
+
     document.getElementById(
       "pokemonImageShinyBack"
     ).alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON STATS
     document.getElementById("pokemonOrder").textContent = data.order;
-    document.getElementById("pokemonTypes").textContent = data.types;
+
+    document.getElementById("pokemonTypes").textContent = data.types
+      .map((type) => type.type.name)
+      .join(", ");
+
     document.getElementById("pokemonBaseExperience").textContent =
       data.base_experience;
+
     document.getElementById("pokemonHeight").textContent = data.height;
+
     document.getElementById("pokemonWeight").textContent = data.weight;
-    document.getElementById("pokemonAbilities").textContent = data.abilities;
-    document.getElementById("pokemonStats").textContent = data.stats;
-    document.getElementById("pokemonHeldItems").textContent = data.held_items;
-    document.getElementById("pokemonMoves").textContent = data.moves;
+
+    document.getElementById("pokemonAbilities").textContent = data.abilities.map((ability) => ability.ability.name).join(", ");
+
+    document.getElementById("pokemonStats").textContent = data.stats.map((stat) => stat.stat.name).join(", ");
+
+    document.getElementById("pokemonHeldItems").textContent = data.held_items.map((item) => item.item.name).join(", ");
+
+    document.getElementById("pokemonMoves").textContent = data.moves.map((move) => move.move.name).join(", ");
   } catch (error) {
     console.error("Error fetching Pokemon:", error);
     document.getElementById("errorMessage").textContent =
@@ -456,7 +503,6 @@ btnNext.addEventListener("click", () => {
   if (imagemAtual === 0) {
     document.getElementById("NextPic").textContent = "View Shiny";
   } else {
-    document.getElementById("NextPic").textContent =
-      "View Default";
+    document.getElementById("NextPic").textContent = "View Default";
   }
 });
