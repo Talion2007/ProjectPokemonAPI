@@ -24,7 +24,7 @@ async function init() {
   const initID = 25;
 
   try {
-    const response = await fetch(`http://localhost:${PORT}/pokemon/${initID}`);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${initID}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching Pokemon: ${response.statusText}`);
@@ -42,9 +42,9 @@ async function init() {
     document.getElementById("pokemonId").textContent = data.id;
 
     //! SETTING POKEMON IMAGE
-    document.getElementById("pokemonImage").src = data.image;
+    document.getElementById("pokemonImage").src = data.sprites.front_default;
     document.getElementById("pokemonImage").alt = `Image of ${data.name}`;
-    document.getElementById("pokemonImageBack").src = data.imageBack;
+    document.getElementById("pokemonImageBack").src = data.sprites.back_default;
     document.getElementById("pokemonImageBack").alt = `Image of ${data.name}`;
 
     //! SETTING POKEMON IMAGE SHINY
